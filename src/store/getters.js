@@ -1,19 +1,31 @@
+/*
+  store的所有状态
+*/
 const getters = {
-  sidebar: state => state.app.sidebar,
-  language: state => state.app.language,
-  size: state => state.app.size,
-  device: state => state.app.device,
+  // 系统设置
+  sidebar: state => state.sidebar,
+  language: state => state.language,
+  size: state => state.size,
+  device: state => state.device,
+
+  // 面包屑导航
   visitedViews: state => state.tagsView.visitedViews,
   cachedViews: state => state.tagsView.cachedViews,
-  token: state => state.user.token,
-  avatar: state => state.user.avatar,
-  name: state => state.user.name,
-  introduction: state => state.user.introduction,
-  status: state => state.user.status,
-  roles: state => state.user.roles,
-  setting: state => state.user.setting,
+
+  // 用户信息
+  token: state => state.login.token,
+  avatar: state => state.login.avatar,
+  name: state => state.login.name,
+  introduction: state => state.login.introduction,
+  status: state => state.login.status,
+  roles: state => state.login.roles,
+  setting: state => state.login.setting,
+
+  // 权限路由
   permission_routes: state => state.permission.routes,
   addRoutes: state => state.permission.addRoutes,
+
+  // 错误日志
   errorLogs: state => state.errorLog.logs
 }
 export default getters

@@ -1,4 +1,6 @@
-import { asyncRoutes, constantRoutes } from '@/router'
+
+// Action 通常是异步的
+import { getMeuns } from '@/router'
 
 /**
  * 通过meta.role判断是否与当前用户权限匹配
@@ -12,6 +14,14 @@ function hasPermission(roles, route) {
     return true
   }
 }
+
+/**
+ * 查询用户菜单
+ * @param userId
+ */
+// function getUserRoutes() {
+//   return 555
+// }
 
 /**
  * 递归过滤异步路由表，返回符合用户角色权限的路由表
@@ -33,33 +43,21 @@ export function filterAsyncRoutes(routes, roles) {
 
   return res
 }
+const actions = {
 
-const permission = {
-  state: {
-    routes: [],
-    addRoutes: []
-  },
-  mutations: {
-    SET_ROUTES: (state, routes) => {
-      state.addRoutes = routes
-      state.routes = constantRoutes.concat(routes)
-    }
-  },
-  actions: {
-    GenerateRoutes({ commit }, data) {
-      return new Promise(resolve => {
-        const { roles } = data
-        let accessedRoutes
-        if (roles.includes('admin')) {
-          accessedRoutes = asyncRoutes
-        } else {
-          accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
-        }
-        commit('SET_ROUTES', accessedRoutes)
-        resolve(accessedRoutes)
-      })
-    }
+  async permission_GenerateRoutes({ commit }, data) {
+    const asyncRoutes = await getMeuns()
+    return new Promise(resolve => {
+      const { roles } = data
+      let accessedRoutes
+      if (roles.includes('admin')) {
+        accessedRoutes = asyncRoutes
+      } else {
+        accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
+      }
+      commit('PERMISSION_SET_ROUTES', accessedRoutes)
+      resolve(accessedRoutes)
+    })
   }
 }
-
-export default permission
+export default actions

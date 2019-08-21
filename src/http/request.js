@@ -47,7 +47,7 @@ function request(url, params, option) {
   */
   const commonaxios = function(config, resolve, reject) {
     axios(config).then(rep => {
-      resolve(rep)
+      resolve(rep.data)
     }, error => {
       reject(error)
     })
@@ -161,7 +161,6 @@ function request(url, params, option) {
       return post(config).then(res => {
         return res
       })
-      break;
     case 'POST_FORM_URLENCODED':
       
       let str = ''
@@ -182,7 +181,6 @@ function request(url, params, option) {
         return res
       })
       
-      break;
     case 'POST_JSON':
     case 'POST':
       if (option.method === 'POST_JSON') {
@@ -199,7 +197,7 @@ function request(url, params, option) {
       return post(config).then(res => {
         return res
       })
-      break;
+
     case 'PUT_FORDATA':
     case 'PUT':
       
@@ -221,7 +219,7 @@ function request(url, params, option) {
       return put(config).then(res => {
         return res
       })
-      break;
+
     case 'DELETE':
       reqData = {
         url: url,
@@ -234,7 +232,7 @@ function request(url, params, option) {
       return Delete(config).then(res => {
         return res
       })
-      break;
+
     case 'GET':
       document.cookie = "timeZone='8';path=/"
       reqData = {
@@ -248,7 +246,7 @@ function request(url, params, option) {
       return get(config).then(res => {
         return res
       })
-      break;
+      
     case 'JSONP':
       return getJsonpData(url, params, null).then(res => {
         return res

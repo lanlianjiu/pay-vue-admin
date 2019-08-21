@@ -1,6 +1,5 @@
 import actions from './actions'
 import mutations from './mutations'
-import getters from './getters'
 import { getToken } from '@/utils/auth'
 const state = {
   user: '',
@@ -18,6 +17,5 @@ const state = {
 export default {
   state,
   actions,
-  mutations,
-  getters
+  mutations
 }

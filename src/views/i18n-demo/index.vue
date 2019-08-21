@@ -86,7 +86,7 @@ export default {
   computed: {
     lang: {
       get() {
-        return this.$store.state.app.language
+        return this.$store.state.language
       },
       set(lang) {
         this.$i18n.locale = lang

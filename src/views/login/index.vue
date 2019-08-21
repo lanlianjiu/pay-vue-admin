@@ -136,8 +136,8 @@ export default {
         if (valid) {
           this.loading = true
           this.$store.dispatch('login_loginByUsername', this.loginForm).then((res) => {
-            const result = res.data.result
-            this.$store.commit('SET_TOKEN', result.token)
+            const result = res.result
+            this.$store.commit('LOGIN_SET_TOKEN', result.token)
             setToken(result.token)
             this.loading = false
             this.$router.push({ path: this.redirect || '/' })

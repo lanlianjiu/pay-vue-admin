@@ -13,6 +13,8 @@ import tableRouter from './modules/table'
 import treeTableRouter from './modules/tree-table'
 import nestedRouter from './modules/nested'
 
+import { getToken } from '@/utils/auth' // get token from cookie
+import store from '../store'
 /** note: sub-menu only appear when children.length>=1
  *  detail see  https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
  **/
@@ -111,7 +113,7 @@ export default new Router({
   routes: constantRoutes
 })
 
-export const asyncRoutes = [
+const asyncRoutes = [
   {
     path: '/permission',
     component: Layout,
@@ -383,3 +385,13 @@ export const asyncRoutes = [
 
   { path: '*', redirect: '/404', hidden: true }
 ]
+
+export function getMeuns() {
+  console.log(store)
+  return new Promise(resolve => {
+    store.dispatch('login_getUserInfo', getToken()).then((res) => {
+      resolve(asyncRoutes)
+    })
+  })
+}
+

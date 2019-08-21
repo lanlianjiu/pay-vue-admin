@@ -25,10 +25,10 @@ export default {
   mixins: [ResizeMixin],
   computed: {
     sidebar() {
-      return this.$store.state.app.sidebar
+      return this.$store.state.sidebar
     },
     device() {
-      return this.$store.state.app.device
+      return this.$store.state.device
     },
     classObj() {
       return {
