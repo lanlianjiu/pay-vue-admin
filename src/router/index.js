@@ -113,7 +113,9 @@ export default new Router({
   routes: constantRoutes
 })
 
+// eslint-disable-next-line no-unused-vars
 const asyncRoutes = [
+
   {
     path: '/permission',
     component: Layout,
@@ -386,11 +388,35 @@ const asyncRoutes = [
   { path: '*', redirect: '/404', hidden: true }
 ]
 
+function handleMenus(data) {
+  if (data.children) {
+    if (data.p_id) {
+      console.log(data.component)
+      data.component = () => import(`@/views${data.component}`)
+      // data.component = import(`@/views/${data.component}`)
+    } else {
+      data.component = Layout
+    }
+    for (const j in data.children) {
+      handleMenus(data.children[j])
+    }
+  } else {
+    // console.log(data.component)
+    data.component = () => import(`@/views${data.component}`)
+    // data.component = import(`@/views/${data.component}`)
+  }
+}
+
 export function getMeuns() {
-  console.log(store)
   return new Promise(resolve => {
-    store.dispatch('login_getUserInfo', getToken()).then((res) => {
-      resolve(asyncRoutes)
+    store.dispatch('system_admin_menus', { token: getToken() }).then((res) => {
+      for (const i in res.result) {
+        handleMenus(res.result[i])
+      }
+
+      res.result.push({ path: '*', redirect: '/404', hidden: true })
+
+      resolve(res.result)
     })
   })
 }
