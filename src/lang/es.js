@@ -65,7 +65,10 @@ export default {
     theme: 'Tema',
     clipboardDemo: 'Clipboard',
     i18n: 'I18n',
-    externalLink: 'Enlace externo'
+    externalLink: 'Enlace externo',
+    systemsettings: 'Configuración del sistema',
+    menumanagement: 'estión de menús',
+    rolemanagement: 'Gestión de funciones'
   },
   navbar: {
     logOut: 'Salir',
