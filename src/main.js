@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import './http/interceptors' // http拦截器
 import Cookies from 'js-cookie'
 
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
@@ -16,7 +15,7 @@ import './icons' // icon
 import './errorLog' // error log
 import './permission' // permission control
 // import './mock' // simulation data
-
+// import '@/http/interceptors'
 import * as filters from './filters' // global filters
 
 Vue.use(Element, {

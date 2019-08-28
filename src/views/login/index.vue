@@ -136,6 +136,7 @@ export default {
         if (valid) {
           this.loading = true
           this.$store.dispatch('login_loginByUsername', this.loginForm).then((res) => {
+            console.log(res)
             const result = res.result
             this.$store.commit('LOGIN_SET_TOKEN', result.token)
             setToken(result.token)

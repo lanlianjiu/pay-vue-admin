@@ -4,10 +4,9 @@
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable semi */
 /* eslint-disable no-undef */
-import axios from 'axios'
+import axios from '@/http/interceptors'
 import { uppercase, paramJsonp } from '@/utils';
 import jsonp from 'jsonp';
-axios.defaults.withCredentials = true
 
 function getRequestUrl(params) {
   let bsUrl = ''
@@ -19,10 +18,15 @@ function getRequestUrl(params) {
   return bsUrl + params.url
 }
 
-function request(url, params, option) {
+function request(url, params, option, optionConfig) {
+  let defaultConfig = {
+    showloading: false
+  }
+  let config = {}
   params = params || {}
   option = option || {}
-  let config = {}
+  optionConfig = optionConfig ? Object.assign(defaultConfig, optionConfig) : defaultConfig
+  
   option.method = uppercase(option.method)
   
   let extend = function(dst) {
@@ -47,7 +51,7 @@ function request(url, params, option) {
   */
   const commonaxios = function(config, resolve, reject) {
     axios(config).then(rep => {
-      resolve(rep.data)
+      resolve(rep)
     }, error => {
       reject(error)
     })
@@ -62,7 +66,7 @@ function request(url, params, option) {
     return new Promise(function(resolve, reject) {
       extend(config, {
         method: 'post'
-      })
+      }) 
       commonaxios(config, resolve, reject)
     })
   }
@@ -131,7 +135,7 @@ function request(url, params, option) {
     method: 'JSONP'
   }, option)
   let reqData = {}
-
+  
   switch (option.method) {
     case 'POST_FORMDATA':
       const fd = new FormData()
@@ -155,7 +159,8 @@ function request(url, params, option) {
         headers: {
           'Content-Type': 'multipart/form-data'
         },
-        data: fd
+        data: fd,
+        optionConfig: optionConfig
       }
       config = extend(config, reqData)
       return post(config).then(res => {
@@ -174,7 +179,8 @@ function request(url, params, option) {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
         },
-        data: str
+        data: str,
+        optionConfig: optionConfig
       }
       config = extend(config, reqData)
       return post(config).then(res => {
@@ -191,8 +197,10 @@ function request(url, params, option) {
         headers: {
           'Content-Type': 'application/json;charset=UTF-8'
         },
-        data: params
+        data: params,
+        optionConfig: optionConfig
       }
+      
       config = extend(config, reqData)
       return post(config).then(res => {
         return res
@@ -213,7 +221,8 @@ function request(url, params, option) {
       reqData = {
         url: url,
         headers: headers,
-        data: params
+        data: params,
+        optionConfig: optionConfig
       }
       config = extend(config, reqData)
       return put(config).then(res => {
@@ -226,7 +235,8 @@ function request(url, params, option) {
         headers: {
           'Content-Type': 'application/json'
         },
-        params: params
+        params: params,
+        optionConfig: optionConfig
       }
       config = extend(config, reqData)
       return Delete(config).then(res => {
@@ -240,9 +250,12 @@ function request(url, params, option) {
         headers: {
           'Content-Type': 'application/json'
         },
-        params: params
+        params: params,
+        optionConfig: optionConfig
       }
+      
       config = extend(config, reqData)
+     
       return get(config).then(res => {
         return res
       })
