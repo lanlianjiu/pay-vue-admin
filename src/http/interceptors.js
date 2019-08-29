@@ -2,18 +2,20 @@ import axios from 'axios'
 import { Loading, Message, MessageBox } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
+
 // create an axios instance
 const serivce = axios.create({
-  // baseURL: process.env.BASE_API, // api 的 base_url
   timeout: 5000 // request timeout
 })
+
 axios.defaults.withCredentials = true
+
 /* 请求合并只出现一次loading*/
 let needLoadingRequestCount = 0
 
 function showFullScreenLoading() {
   if (needLoadingRequestCount === 0) {
-    loading('start')/* loading加载*/
+    startLoading()/* loading加载*/
   }
   needLoadingRequestCount++
 }
@@ -28,23 +30,23 @@ function hideFullScreenLoading() {
 
 const tryCloseLoading = () => {
   if (needLoadingRequestCount === 0) {
-    loading('end')/* loading加载*/
+    endLoading()/* loading加载*/
   }
 }
 
 /* loading加载*/
 let $loadingMap
-function loading(type) {
-  if (type === 'start') {
-    $loadingMap = Loading.service({
-      lock: true,
-      text: 'Loading',
-      spinner: 'el-icon-loading',
-      background: 'rgba(0, 0, 0, 0.7)'
-    })
-  } else if (type === 'end') {
-    $loadingMap.close()
-  }
+function startLoading() {
+  $loadingMap = Loading.service({
+    lock: true,
+    text: '正在加载',
+    spinner: 'el-icon-loading',
+    background: 'rgba(0, 0, 0, 0.4)'
+  })
+}
+
+function endLoading() {
+  $loadingMap.close()
 }
 
 // request interceptor
@@ -89,7 +91,7 @@ serivce.interceptors.response.use(
       })
       // 50008:非法的token; 50012:其他客户端登录了;  50014:Token 过期了;
       if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
-        MessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', { // 请自行在引入 MessageBox
+        MessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
           confirmButtonText: '重新登录',
           cancelButtonText: '取消',
           type: 'warning'
@@ -99,6 +101,7 @@ serivce.interceptors.response.use(
           })
         })
       }
+
       return Promise.reject(new Error(res.message || 'Error'))
     } else {
       return response.data

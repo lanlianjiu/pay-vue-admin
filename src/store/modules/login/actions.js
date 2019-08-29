@@ -1,9 +1,9 @@
 import { request, getRequestUrl } from '@/http/request'
 import { api } from './api.js'
-import { setToken, removeToken } from '@/utils/auth'
+import { removeToken } from '@/utils/auth'
 // Action 通常是异步的
 const actions = {
-
+  // 登录接口
   login_loginByUsername({ commit }, params) {
     const url = getRequestUrl({
       url: api.login_loginByUsername
@@ -29,7 +29,7 @@ const actions = {
         if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
           commit('LOGIN_SET_ROLES', data.roles)
         } else {
-          return 'getInfo: roles must be a non-null array!'
+          return '用户必须分配角色!'
         }
 
         commit('LOGIN_SET_NAME', data.name)
@@ -53,7 +53,7 @@ const actions = {
   //   })
   // },
 
-  // 登出
+  // 退出登陆
   login_logout({ commit, state }) {
     return new Promise((resolve, reject) => {
       const url = getRequestUrl({
@@ -71,33 +71,12 @@ const actions = {
     })
   },
 
-  // 前端 登出
+  // 前端弹出退出登录
   login_FedLogOut({ commit }) {
     return new Promise(resolve => {
       commit('LOGIN_SET_TOKEN', '')
       removeToken()
       resolve()
-    })
-  },
-
-  // 动态修改权限
-  login_ChangeRoles({ commit, dispatch }, role) {
-    return new Promise(resolve => {
-      commit('LOGIN_SET_TOKEN', role)
-      setToken(role)
-      const url = getRequestUrl({
-        url: api.login_getUserInfo
-      })
-      return request(url, { token: role }, { method: 'get' })
-        .then((response) => {
-          const data = response.result
-          commit('LOGIN_SET_ROLES', data.roles)
-          commit('LOGIN_SET_NAME', data.name)
-          commit('LOGIN_SET_AVATAR', data.avatar)
-          commit('LOGIN_SET_INTRODUCTION', data.introduction)
-          dispatch('permission_GenerateRoutes', data) // 动态修改权限后 重绘侧边菜单
-          resolve()
-        })
     })
   }
 

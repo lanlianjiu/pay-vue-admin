@@ -19,11 +19,12 @@ const actions = {
     commit('SYSTEM_SET_SIZE', size)
   },
 
+  // 获取侧边栏菜单
   system_admin_menus({ commit }, params) {
     const url = getRequestUrl({
       url: api.system_admin_menus
     })
-    return request(url, params, { method: 'get' })
+    return request(url, params, { method: 'get' }, { showloading: true })
       .then((rep) => {
         return rep
       })
