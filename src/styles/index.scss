@@ -14,7 +14,7 @@ body {
 }
 
 label {
-  font-weight: 700;
+  //font-weight: 700;
 }
 
 html {
@@ -198,5 +198,9 @@ code {
 
 .multiselect--active {
   z-index: 1000 !important;
+}
+
+.btn-danger {
+  color: #f56c6c;
 }
 
