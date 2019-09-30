@@ -21,6 +21,7 @@ const actions = {
     })
     return request(url, { token: params }, { method: 'get' })
       .then((rep) => {
+        removeToken()
         if (!rep.result) {
           return 'Verification failed, please login again.'
         }

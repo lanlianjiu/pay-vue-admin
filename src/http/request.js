@@ -184,6 +184,7 @@ function request(url, params, option, optionConfig) {
       }
       config = extend(config, reqData)
       return post(config).then(res => {
+        console.log(res);
         return res
       })
       

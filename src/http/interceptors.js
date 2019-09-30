@@ -76,13 +76,10 @@ serivce.interceptors.response.use(
    * 如想通过 xmlhttprequest 来状态码标识 逻辑可写在下面error中
    * 以下代码均为样例，请结合自生需求加以修改，若不需要，则可删除
   */
-
-    const res = response.data
-
+    const res = (typeof (response.data) === 'string') ? JSON.parse(response.data) : response.data
     if (response.config.optionConfig.showloading) {
       hideFullScreenLoading()
     }
-
     if (res.status !== 200) {
       Message({
         message: res.message,
@@ -104,7 +101,7 @@ serivce.interceptors.response.use(
 
       return Promise.reject(new Error(res.message || 'Error'))
     } else {
-      return response.data
+      return res
     }
   },
   error => {
