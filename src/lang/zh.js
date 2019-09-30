@@ -1,10 +1,10 @@
 export default {
   route: {
     dashboard: '首页',
-    systemmanagement: '系统管理',
-    menumanagement: '菜单管理',
-    rolemanagement: '角色管理',
-    usermanagement: '用户管理'
+    sysMgt: '系统管理',
+    menuMgt: '菜单管理',
+    roleMgt: '角色管理',
+    userMgt: '用户管理'
   },
   navbar: {
     logOut: '退出登录',

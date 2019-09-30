@@ -1,10 +1,10 @@
 export default {
   route: {
     dashboard: 'Panel de control',
-    systemmanagement: 'Gestión del sistema',
-    menumanagement: 'estión de menús',
-    rolemanagement: 'Gestión de funciones',
-    usermanagement: 'Gestión de usuarios'
+    sysMgt: 'Gestión del sistema',
+    menuMgt: 'estión de menús',
+    roleMgt: 'Gestión de funciones',
+    userMgt: 'Gestión de usuarios'
   },
   navbar: {
     logOut: 'Salir',

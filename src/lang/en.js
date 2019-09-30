@@ -1,10 +1,10 @@
 export default {
   route: {
     dashboard: 'Dashboard',
-    systemmanagement: 'Sys management',
-    menumanagement: 'Menu management',
-    rolemanagement: 'Role management',
-    usermanagement: 'User management'
+    sysMgt: 'Sys management',
+    menuMgt: 'Menu management',
+    roleMgt: 'Role management',
+    userMgt: 'User management'
   },
   navbar: {
     logOut: 'Log Out',
